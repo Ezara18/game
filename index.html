@@ -1,101 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-<style>
-    body {
-    text-align: center;
-    font-family: Arial, sans-serif;
-}
-
-#game-board {
-    display: grid;
-    grid-template-columns: repeat(8, 40px);
-    gap: 2px;
-    margin: 20px auto;
-    width: max-content;
-}
-
-.cell {
-    width: 40px;
-    height: 40px;
-    background-color: lightgray;
-    border: 1px solid #999;
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.cell.revealed {
-    background-color: white;
-    cursor: default;
-}
-
-.cell.bomb {
-    background-color: red;
-    color: white;
-}
-
-</style>
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💣 Bomb Game 💣</title>
+    <title>เกมกวางระเบิด</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>💣 Bomb Game 💣</h1>
-        <p>กดปุ่มระเบิด ถ้ากล้าพอ!</p>
-        <div id="game-area">
-            <img id="bomb" src="C:\Users\ezara\OneDrive\เดสก์ท็อป\ed\bomb" alt="bomb">
-        </div>
-        <button id="bomb-btn">💥 คลิกเพื่อจุดระเบิด! 💥</button>
-        <p id="message"></p>
-        <p>คะแนน: <span id="score">0</span></p>
-        <button id="reset-btn">🔄 เล่นใหม่</button>
-    </div>
-
-    <audio id="click-sound" src="sounds/click.mp3"></audio>
-    <audio id="explosion-sound" src="sounds/explosion.mp3"></audio>
-
+    <h1>เกมกวางระเบิด</h1>
+    <div id="game-board"></div>
+    <p id="status"></p>
+    <button id="reset-button" onclick="resetGame()">เริ่มใหม่</button>  <!-- ปุ่มเริ่มใหม่ -->
     <script src="script.js"></script>
 </body>
 </html>
-<script>
-const bombButton = document.getElementById("bomb-btn");
-const resetButton = document.getElementById("reset-btn");
-const message = document.getElementById("message");
-const bombImage = document.getElementById("bomb");
-const scoreText = document.getElementById("score");
-const clickSound = document.getElementById("click-sound");
-const explosionSound = document.getElementById("explosion-sound");
-
-let score = 0;
-
-bombButton.addEventListener("click", () => {
-    clickSound.play(); // เล่นเสียงคลิก
-    let random = Math.random();
-
-    if (random < 0.3) { // 30% โอกาสระเบิด
-        explosionSound.play(); // เล่นเสียงระเบิด
-        message.innerText = "💥 BOOM! ระเบิดแล้ว! 💥";
-        bombImage.src = "images/explosion.gif";
-        document.body.style.backgroundColor = "red";
-        bombButton.style.display = "none";
-        resetButton.style.display = "block";
-    } else {
-        score++;
-        scoreText.innerText = score;
-        message.innerText = "😅 รอดแล้ว! ลองอีกครั้ง!";
-    }
-});
-
-resetButton.addEventListener("click", () => {
-    score = 0;
-    scoreText.innerText = score;
-    message.innerText = "";
-    bombImage.src = "images/bomb.png";
-    document.body.style.backgroundColor = "#222";
-    bombButton.style.display = "block";
-    resetButton.style.display = "none";
-});
